@@ -235,7 +235,7 @@ N_STATES = 256
 # =====================================================================
 # TRAINING
 # =====================================================================
-def train(env_kw, n_ep=500, alpha=0.10, gamma=0.7, eps0=1.0, epsf=0.05, seed=42, verbose=True):
+def train(env_kw, n_ep=2500, alpha=0.10, gamma=0.7, eps0=1.0, epsf=0.05, seed=42, verbose=True):
     env = Env(**env_kw)
     rng = np.random.default_rng(seed)
     Qs = [np.zeros((N_STATES, N_ACT)) for _ in range(env.na)]
@@ -284,7 +284,7 @@ def train(env_kw, n_ep=500, alpha=0.10, gamma=0.7, eps0=1.0, epsf=0.05, seed=42,
 
     return {k: np.array(v) for k, v in H.items()}
 
-def run_habermas(N=2000, seeds=(42, 43, 44, 45, 46), verbose=True):
+def run_habermas(N=2500, seeds=(42, 43, 44, 45, 46), verbose=True):
     configs = [
         ("symmetric_baseline", dict(tyrant_idx=None, enable_zap=False)),
         # [PHILOSOPHICAL TWEAK 2 applied here: zap_cost=0.5]
@@ -409,13 +409,13 @@ def generate_plots(R, outdir):
 # MAIN EXECUTION
 # =====================================================================
 if __name__ == "__main__":
-    OUTDIR = "/home/claude/forager_tyrant/plots"
+    OUTDIR = "./forager_tyrant/plots"
     
     print("Starting Training Run...")
     t0 = time.time()
     
     # Run Experiment
-    R = run_habermas(N=3000, seeds=(42, 43, 44), verbose=True)
+    R = run_habermas(N=25000, seeds=(42, 43, 44), verbose=True)
     print(f"\nWall time: {time.time()-t0:.1f}s")
 
     # Save to disk
